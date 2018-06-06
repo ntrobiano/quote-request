@@ -3,7 +3,7 @@ const request = require('request');
 require('dotenv').config();
 
 const app = express();
-const { PORT, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
+const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
 app.use(express.json());
@@ -31,10 +31,8 @@ app.post('/quote', (req, res) => {
             \nYear Purchased: ${year_purchased}
             \nOriginal Price: ${original_price}
         `,
-        variants: [
-            { "option1": "offer", "value1": "upfront" },
-            { "option1": "offer", "value2": "consignment" }
-        ],
+        options: [{ name: "Offer", values: [ "Upfront", "Consignment" ] }],
+        variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
         vendor,
         product_type,
         published: false
@@ -52,16 +50,18 @@ app.post('/quote', (req, res) => {
         // DONE: create a draft order with above products
         if (body) {
 
-            const { product: { variants } } = body;
+            const { product } = body;
+            console.log(product.options, product.variants)
             request.post({
                 auth,
                 body: {
                   draft_order: {
                     customer_id,
-                    line_items: variants.map(variant => ({
+                    line_items: product.variants.map(variant => ({
                         variant_id: variant.id,
                         quantity: 1
-                    }))
+                    })),
+                    tags: "pending"
                   }
                 },
                 json: true,
