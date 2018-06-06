@@ -29,7 +29,7 @@ app.post('/quote', (req, res) => {
             ${body_html}
             Condition: ${condition}\n
             Year Purchased: ${year_purchased}\n
-            Original Price: ${original_price}
+            Original Price: ${accounting.formatMoney(original_price)}
         `,
         options: [{ name: "Offer", values: [ "Upfront", "Consignment" ] }],
         variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
