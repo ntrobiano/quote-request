@@ -70,8 +70,30 @@ app.post('/quote', (req, res) => {
 
             res.send('New Quote Created');
 
+        };
+        
+        if (tag = "upfront") {
+            request.post({
+                auth,
+                body: {
+                    draft_order_invoice: {
+                        to: "nicholas@nicholastrobiano.com",
+                        from: "info@nicholastrobiano.com",
+                        bcc: [
+                        ],
+                        subject: "Testing automatic upfront tag",
+                        custom_message: "Testing message for custom upfront tag"
+                      },
+                  
+                },
+                json: true,
+                url: `https://${SHOP_URL}/admin/draft_orders/#{draft_order_id}/send_invoice.json`
+            });
+
         }
+
     });
+
 
 });
 
