@@ -61,7 +61,7 @@ app.post('/quote', (req, res) => {
                         variant_id: variant.id,
                         quantity: 1
                     })),
-                    tags: "pending","approved"
+                    tags: "pending"
                   }
                 },
                 json: true,
