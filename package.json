@@ -1,0 +1,30 @@
+{
+  "name": "quote-request",
+  "version": "1.0.0",
+  "description": "Quote request app for Shopify",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntrobiano/quote-request.git"
+  },
+  "keywords": [
+    "shopify",
+    "quote",
+    "tool"
+  ],
+  "author": "Nicholas Trobiano <nicholas@nicholastrobiano.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntrobiano/quote-request/issues"
+  },
+  "homepage": "https://github.com/ntrobiano/quote-request#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "request": "^2.87.0"
+  }
+}
