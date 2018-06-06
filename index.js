@@ -27,9 +27,9 @@ app.post('/quote', (req, res) => {
         title: `New Quote: ${new Date().getTime()}`,
         body_html: `
             ${body_html}
-            \nCondition: ${condition}
-            \nYear Purchased: ${year_purchased}
-            \nOriginal Price: ${original_price}
+            Condition: ${condition}\n
+            Year Purchased: ${year_purchased}\n
+            Original Price: ${accounting.formatMoney(original_price)}
         `,
         options: [{ name: "Offer", values: [ "Upfront", "Consignment" ] }],
         variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
