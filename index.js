@@ -58,7 +58,7 @@ app.post('/quote', (req, res) => {
                 body: {
                   draft_order: {
                     customer: {
-                        customer_id,
+                        id,
                       },
                       use_customer_default_address: true,
                     line_items: product.variants.map(variant => ({
