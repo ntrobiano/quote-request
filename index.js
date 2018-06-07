@@ -12,7 +12,7 @@ app.get('/', (req, res) => res.send('Shopify Quote Request'));
 
 app.post('/quote', (req, res) => {
     const {
-        customer_id,
+        customer,
         product_type,
         vendor,
         body_html,
@@ -57,7 +57,8 @@ app.post('/quote', (req, res) => {
                 auth,
                 body: {
                   draft_order: {
-                    customer_id,
+                    customer: custmer.id,
+                      use_customer_default_address: true,
                     line_items: product.variants.map(variant => ({
                         variant_id: variant.id,
                         quantity: 1
