@@ -35,10 +35,46 @@ app.post('/quote', (req, res) => {
         variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
         vendor,
         product_type,
+        tags: "Quote Request Only",
         published: false
     };
 
     // DONE: create a unpublished product
+
+    request.post({
+        auth,
+        body: { product },
+        json: true,
+        url: `https://${SHOP_URL}/admin/products.json`
+    }, (error, response, body) => {
+
+        // DONE: create a draft order with above products
+        if (body) {
+
+            const { product } = body;
+            console.log(product.options, product.variants)
+            request.post({
+                auth,
+                body: {
+                  draft_order: {
+                    customer_id,
+                    line_items: product.variants.map(variant => ({
+                        variant_id: variant.id,
+                        quantity: 1
+                    })),
+                    tags: "pending"
+                  }
+                },
+                json: true,
+                url: `https://${SHOP_URL}/admin/draft_orders.json`
+            });
+
+            res.send('New Quote Created');
+
+        };
+        
+
+    });
 
     request.post({
         auth,
