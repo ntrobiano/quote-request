@@ -19,7 +19,6 @@ app.post('/quote', (req, res) => {
         condition,
         year_purchased,
         original_price,
-        tags,
     } = req.body;
 
     // DONE: create combined body with html + condition, year_purchased, original_price
@@ -53,7 +52,7 @@ app.post('/quote', (req, res) => {
         if (body) {
 
             const { product } = body;
-            console.log(product.options, product.variants)
+            console.log(product.options, product.variants, product.tags)
             request.post({
                 auth,
                 body: {
@@ -76,42 +75,6 @@ app.post('/quote', (req, res) => {
         
 
     });
-
-    request.post({
-        auth,
-        body: { product },
-        json: true,
-        url: `https://${SHOP_URL}/admin/products.json`
-    }, (error, response, body) => {
-
-        // DONE: create a draft order with above products
-        if (body) {
-
-            const { product } = body;
-            console.log(product.options, product.variants)
-            request.post({
-                auth,
-                body: {
-                  draft_order: {
-                    customer_id,
-                    line_items: product.variants.map(variant => ({
-                        variant_id: variant.id,
-                        quantity: 1
-                    })),
-                    tags: "pending"
-                  }
-                },
-                json: true,
-                url: `https://${SHOP_URL}/admin/draft_orders.json`
-            });
-
-            res.send('New Quote Created');
-
-        };
-        
-
-    });
-
 
 });
 
