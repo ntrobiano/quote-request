@@ -19,6 +19,7 @@ app.post('/quote', (req, res) => {
         condition,
         year_purchased,
         original_price,
+        tags,
     } = req.body;
 
     // DONE: create combined body with html + condition, year_purchased, original_price
