@@ -51,14 +51,13 @@ app.post('/quote', (req, res) => {
         // DONE: create a draft order with above products
         if (body) {
             const { product } = body;
-            const { customer_id } = id;
             console.log(product.options, product.variants, product.tags)
             request.post({
                 auth,
                 body: {
                   draft_order: {
                     customer: {
-                        id,
+                        id:customer_id,
                       },
                       use_customer_default_address: true,
                     line_items: product.variants.map(variant => ({
