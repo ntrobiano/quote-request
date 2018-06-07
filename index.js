@@ -19,6 +19,7 @@ app.post('/quote', (req, res) => {
         condition,
         year_purchased,
         original_price,
+        tags,
     } = req.body;
 
     // DONE: create combined body with html + condition, year_purchased, original_price
@@ -35,7 +36,7 @@ app.post('/quote', (req, res) => {
         variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
         vendor,
         product_type,
-        "tags": "QuoteRequest",
+        tags: "QuoteRequest",
         published: false
     };
 
