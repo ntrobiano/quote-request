@@ -35,6 +35,7 @@ app.post('/quote', (req, res) => {
         variants: [{ option1: "Upfront" }, { option1: "Consignment" }],
         vendor,
         product_type,
+        "tags": "QuoteRequest",
         published: false
     };
 
