@@ -31,8 +31,8 @@ app.post('/quote', (req, res) => {
             Year Purchased: ${year_purchased}\n
             Original Price: ${original_price}
         `,
-        options: [{ name: "Offer", values: [ "Upfront", "Consignment", "Store Credit" ] }],
-        variants: [{ option1: "Upfront" }, { option1: "Consignment" }, { option1: "Store Credit" }],
+        options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
+        variants: [{ option1: "Consignment" }, { option1: "Upfront" }, { option1: "Store Credit" }],
         vendor,
         product_type,
         tags: "QuoteRequest",
