@@ -21,7 +21,7 @@ app.post('/quote', (req, res) => {
         original_price,
     } = req.body;
 
-    console.log(req.body);
+    console.log(req);
 
     // DONE: create combined body with html + condition, year_purchased, original_price
 
@@ -53,7 +53,7 @@ app.post('/quote', (req, res) => {
         // DONE: create a draft order with above products
         if (body) {
             const { product } = body;
-            console.log(product.options, product.variants, product.tags)
+            // console.log(product.options, product.variants, product.tags)
             request.post({
                 auth,
                 body: {
