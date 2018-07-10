@@ -6,6 +6,7 @@ const app = express();
 const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('Shopify Quote Request'));
