@@ -1,14 +1,16 @@
+require('dotenv').config();
 const express = require('express');
 const request = require('request');
 const cors = require('cors');
-require('dotenv').config();
+const storage = multer.memoryStorage();
 
 const app = express();
+const upload = multer({ storage });
 const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
 app.use(cors());
-app.use(express.json());
+// app.use(express.json());
 
 app.get('/', (req, res) => res.send('Shopify Quote Request'));
 
