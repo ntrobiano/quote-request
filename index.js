@@ -12,7 +12,7 @@ const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 app.use(cors());
 // app.use(express.json());
 
-app.get('/', (req, res) => res.send('Shopify Quote Request'));
+app.get('/', upload.array('photos', 4), (req, res) => res.send('Shopify Quote Request'));
 
 app.post('/quote', (req, res) => {
     const {
