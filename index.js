@@ -2,10 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const request = require('request');
 const cors = require('cors');
-const storage = multer.memoryStorage();
+const multer = require('multer');
 
 const app = express();
-const upload = multer({ storage });
+const upload = multer({ storage: multer.memoryStorage() });
 const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
