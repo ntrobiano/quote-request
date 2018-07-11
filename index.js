@@ -25,7 +25,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         original_price,
     } = req.body;
 
-    console.log(req.body);
+    console.log(req.body, req.files);
 
     // DONE: create combined body with html + condition, year_purchased, original_price
 
