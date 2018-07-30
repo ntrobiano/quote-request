@@ -23,11 +23,12 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         condition,
         year_purchased,
         original_price,
+        dimensions,
     } = req.body;
 
     console.log(req.body, req.files);
 
-    // DONE: create combined body with html + condition, year_purchased, original_price
+    // DONE: create combined body with html + condition, year_purchased, original_price, dimensions
 
     const product = {
         title: `New Quote: ${new Date().getTime()}`,
@@ -35,7 +36,8 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             ${body_html}
             Condition: ${condition}\n
             Year Purchased: ${year_purchased}\n
-            Original Price: ${original_price}
+            Original Price: ${original_price}\n
+            Dimensions: ${dimensions}
         `,
         images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
         options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
