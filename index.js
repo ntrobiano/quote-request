@@ -83,9 +83,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             res.send('New Quote Created');
 
         };
-    if(status) {
-            $('.alert-success').show();
-    }   
+        
 
     });
 
