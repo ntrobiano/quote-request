@@ -21,9 +21,9 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         vendor,
         body_html,
         condition,
+        dimensions,
         year_purchased,
         original_price,
-        dimensions,
     } = req.body;
 
     console.log(req.body, req.files);
@@ -35,9 +35,9 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         body_html: `
             ${body_html}
             Condition: ${condition}\n
+            Dimensions: ${dimensions}\n
             Year Purchased: ${year_purchased}\n
-            Original Price: ${original_price}\n
-            Dimensions: ${dimensions}
+            Original Price: ${original_price}
         `,
         images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
         options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
