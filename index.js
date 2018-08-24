@@ -10,7 +10,7 @@ const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
 app.use(cors());
-// app.use(express.json());
+app.use(express.json());
 
 app.get('/', (req, res) => res.send('Shopify Quote Request'));
 
@@ -85,6 +85,50 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         };
         
 
+    });
+
+});
+
+app.post('/quote-approval', (req, res) => {
+    const {
+        customer_id,
+        product_id,
+        unwanted_variant_ids, // consignment, up_front, store_credit
+        payment_method_tag, // check, paypal, transfer, international
+    } = req.body;
+
+    console.log(req.body);
+
+    // Delete the vartiants we don't want
+    unwanted_variant_ids.forEach(variant_id => {
+        request.delete({
+            auth,
+            url: `https://${SHOP_URL}/admin/products/${product_id}/variants/${variant_id}.json` 
+        });
+    });
+
+    let tagsArray = [];
+
+    // Get the current customers tags
+    request.get({
+        auth,
+        url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
+    }, (error, response, body) => {
+        if (body && body.tags) {
+            tagsArray = body.tags.split(', ');
+        }
+        
+        const tags = [ ...tagsArray, payment_method_tag, 'accepted quote' ].join(', ');
+
+        // Assign the payment method to the customer
+        request.put({
+            auth,
+            json: true,
+            body: { customer: { id: customer_id, tags } },
+            url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
+        });
+
+        return res.sendStatus(200);
     });
 
 });
