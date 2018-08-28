@@ -73,7 +73,6 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                         variant_id: variant.id,
                         quantity: "-1"
                     })),
-                    published_scope: "web",
                     tags: "pending"
                   }
                 },
