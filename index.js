@@ -71,8 +71,9 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                       use_customer_default_address: true,
                     line_items: product.variants.map(variant => ({
                         variant_id: variant.id,
-                        quantity: 1
+                        quantity: "-1"
                     })),
+                    published_scope: "web",
                     tags: "pending"
                   }
                 },
