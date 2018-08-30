@@ -94,6 +94,7 @@ app.post('/quote-approval', (req, res) => {
     const {
         customer_id,
         product_id,
+        ordernumb,
         unwanted_variant_ids, // consignment, up_front, store_credit
         payment_method_tag, // check, paypal, transfer, international
     } = req.body;
@@ -111,6 +112,7 @@ app.post('/quote-approval', (req, res) => {
     let tagsArray = [];
 
     // Get the current customers tags
+    
     request.get({
         auth,
         url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
@@ -119,7 +121,7 @@ app.post('/quote-approval', (req, res) => {
             tagsArray = body.tags.split(', ');
         }
         
-        const tags = [ ...tagsArray, payment_method_tag, 'accepted quote' ].join(', ');
+        const tags = [ ...tagsArray, payment_method_tag, 'Accepted${ordernumb}' ].join(', ');
 
         // Assign the payment method to the customer
         request.put({
