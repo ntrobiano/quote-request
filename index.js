@@ -121,7 +121,7 @@ app.post('/quote-approval', (req, res) => {
             tagsArray = body.tags.split(', ');
         }
         
-        const tags = [ ...tagsArray, payment_method_tag, 'Accepted${ordernumb}' ].join(', ');
+        const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
 
         // Assign the payment method to the customer
         request.put({
