@@ -89,7 +89,6 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
 
 });
 
-app.listen(PORT);
 
 app.post('/quote-approval', (req, res) => {
     const {
