@@ -31,10 +31,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
     // DONE: create combined body with html + condition, year_purchased, original_price, dimensions
 
     const product = {
-        title: `New Quote: ${
-            var dateFormat = require('dateformat');
-            var now = new Date();
-            dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");}`,
+        title: `New Quote: ${new Date().toDateString()}`,
         body_html: `
             ${body_html}
             Condition: ${condition}\n
