@@ -5,9 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 
 const app = express();
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: maxSize } });
+const upload = multer({ storage: multer.memoryStorage() });
 const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
