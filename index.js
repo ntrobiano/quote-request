@@ -5,9 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 
 const app = express();
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: maxSize } });
+const upload = multer({ storage: multer.memoryStorage() });
 const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
@@ -99,7 +97,6 @@ app.post('/quote-approval', (req, res) => {
         ordernumb,
         unwanted_variant_ids, // consignment, up_front, store_credit
         payment_method_tag, // check, paypal, transfer, international
-        pp_email,
     } = req.body;
 
     console.log(req.body);
@@ -130,7 +127,7 @@ app.post('/quote-approval', (req, res) => {
         request.put({
             auth,
             json: true,
-            body: { customer: { id: customer_id, tags, note: pp_email } },
+            body: { customer: { id: customer_id, tags } },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
         });
 
