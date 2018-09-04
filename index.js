@@ -3,7 +3,7 @@ const express = require('express');
 const request = require('request');
 const cors = require('cors');
 const multer = require('multer');
-
+var maxSize = 1 * 1000 * 1000;
 const app = express();
 const upload = multer({
     storage: multer.memoryStorage(),
