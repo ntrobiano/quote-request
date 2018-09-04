@@ -97,6 +97,7 @@ app.post('/quote-approval', (req, res) => {
         ordernumb,
         unwanted_variant_ids, // consignment, up_front, store_credit
         payment_method_tag, // check, paypal, transfer, international
+        pp_email,
     } = req.body;
 
     console.log(req.body);
@@ -127,7 +128,7 @@ app.post('/quote-approval', (req, res) => {
         request.put({
             auth,
             json: true,
-            body: { customer: { id: customer_id, tags } },
+            body: { customer: { id: customer_id, tags, note: pp_email } },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
         });
 
