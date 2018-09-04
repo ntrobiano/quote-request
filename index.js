@@ -91,7 +91,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
 
 });
 
-
+// DONE: Created quote
 app.post('/quote-approval', (req, res) => {
     const {
         customer_id,
