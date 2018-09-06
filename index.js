@@ -19,9 +19,9 @@ app.get('/', (req, res) => res.send('Shopify Quote Request'));
 app.post('/quote', upload.array('photos', 4), (req, res) => {
     const {
         customer_id,
-        product_type,
         vendor,
         body_html,
+        type,
         condition,
         dimensions,
         year_purchased,
@@ -36,6 +36,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         title: `New Quote: ${new Date().toDateString()}`,
         body_html: `
             ${body_html}
+            Product Type: ${type}\n
             Condition: ${condition}\n
             Dimensions: ${dimensions}\n
             Year Purchased: ${year_purchased}\n
@@ -45,7 +46,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
         variants: [{ option1: "Consignment" }, { option1: "Upfront" }, { option1: "Store Credit" }],
         vendor,
-        product_type,
+        product_type: "Quote Request",
         tags: ("QuoteRequest, pfs:hidden"),
         published: true
     };
