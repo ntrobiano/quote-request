@@ -47,7 +47,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         vendor,
         product_type,
         tags: ("QuoteRequest", "pfs:hidden"),
-        published: false
+        published: true
     };
 
     // DONE: create a unpublished product
