@@ -46,7 +46,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
         variants: [{ option1: "Consignment" }, { option1: "Upfront" }, { option1: "Store Credit" }],
         vendor,
-        product_type: "Quote Request",
+        product_type: "QuoteRequest",
         tags: ("QuoteRequest, pfs:hidden"),
         published: true
     };
