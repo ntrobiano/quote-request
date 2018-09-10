@@ -43,8 +43,8 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             Original Price: ${original_price}
         `,
         images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
-        options: [{ name: "Offer", values: [ "Consignment", "Upfront", "Store Credit" ] }],
-        variants: [{ option1: "Consignment" }, { option1: "Upfront" }, { option1: "Store Credit" }],
+        options: [{ name: "Offer", values: [ "Consignment", "Upfront Purchase", "Store Credit" ] }],
+        variants: [{ option1: "Consignment" }, { option1: "Upfront Purchase" }, { option1: "Store Credit" }],
         vendor,
         product_type: "QuoteRequest",
         tags: ("QuoteRequest, pfs:hidden"),
