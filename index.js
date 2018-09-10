@@ -101,6 +101,7 @@ app.post('/quote-approval', (req, res) => {
         unwanted_variant_ids, // consignment, up_front, store_credit
         payment_method_tag, // check, paypal, transfer, international
         pp_email,
+        bt_name, bt_address, bt_accounttype, bt_bankname, bt_bankaddress, bt_accountnumber, bt_routingnumber,
     } = req.body;
 
     console.log(req.body);
@@ -131,7 +132,22 @@ app.post('/quote-approval', (req, res) => {
         request.put({
             auth,
             json: true,
-            body: { customer: { id: customer_id, tags, note: pp_email } },
+            body: { 
+                customer: { 
+                    id: customer_id, 
+                    tags, 
+                    note: `
+                    ${pp_email}
+                    Customer Name: ${bt_name}\n
+                    Customer Address: ${bt_address}\n
+                    Account Type: ${bt_accounttype}\n
+                    Bank Name: ${bt_bankname}\n
+                    Bank Address: ${bt_bankaddress}\n
+                    Account Number: ${bt_accountnumber}\n
+                    Routing Number: ${bt_routingnumber}
+                `
+                } 
+            },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
         });
 
