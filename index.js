@@ -128,7 +128,7 @@ app.post('/quote-approval', (req, res) => {
         
         const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
         const note_info = {
-            body_html: `
+            note: `
             ${pp_email}\n
             Customer Name: ${bt_name}\n
             Customer Address: ${bt_address}\n
@@ -146,7 +146,7 @@ app.post('/quote-approval', (req, res) => {
                 customer: { 
                     id: customer_id, 
                     tags, 
-                    note: note_info,
+                    note_info,
                 } 
             },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
