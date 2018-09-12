@@ -127,17 +127,7 @@ app.post('/quote-approval', (req, res) => {
         }
         
         const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
-        const note_info = {
-            note: `
-            PayPal Email:${pp_email}\n
-            Customer Name: ${bt_name}\n
-            Customer Address: ${bt_address}\n
-            Account Type: ${bt_accounttype}\n
-            Bank Name: ${bt_bankname}\n
-            Bank Address: ${bt_bankaddress}\n
-            Account Number: ${bt_accountnumber}\n
-            Routing Number: ${bt_routingnumber}
-        `  };
+        
         // Assign the payment method to the customer
         request.put({
             auth,
@@ -146,7 +136,16 @@ app.post('/quote-approval', (req, res) => {
                 customer: { 
                     id: customer_id, 
                     tags, 
-                    note_info,
+                    note: `
+                    PayPal Email:${pp_email}\n
+                    Customer Name: ${bt_name}\n
+                    Customer Address: ${bt_address}\n
+                    Account Type: ${bt_accounttype}\n
+                    Bank Name: ${bt_bankname}\n
+                    Bank Address: ${bt_bankaddress}\n
+                    Account Number: ${bt_accountnumber}\n
+                    Routing Number: ${bt_routingnumber}
+                `  
                 } 
             },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
