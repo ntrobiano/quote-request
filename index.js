@@ -129,7 +129,7 @@ app.post('/quote-approval', (req, res) => {
         const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
         const note_info = {
             note: `
-            ${pp_email}\n
+            PayPal Email:${pp_email}\n
             Customer Name: ${bt_name}\n
             Customer Address: ${bt_address}\n
             Account Type: ${bt_accounttype}\n
