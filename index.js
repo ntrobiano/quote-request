@@ -128,25 +128,6 @@ app.post('/quote-approval', (req, res) => {
         }
         
         const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
-        const note = {
-            note: `
-            PayPal Email: ${pp_email}\n
-            Customer Name: ${bt_name}\n
-            Customer Address: ${bt_address}\n
-            Account Type: ${bt_accounttype}\n
-            Bank Name: ${bt_bankname}\n
-            Bank Address: ${bt_bankaddress}\n
-            Account Number: ${bt_accountnumber}\n
-            Routing Number: ${bt_routingnumber}\n
-            Customer Name: ${bi_name}\n
-            Customer Address: ${bi_address}\n
-            Account Type: ${bi_accounttype}\n
-            Bank Name: ${bi_bankname}\n
-            Bank Address: ${bi_bankaddress}\n
-            Account Number: ${bi_iban}\n
-            Routing Number: ${bi_swift}
-            `,
-        };
         
         // Assign the payment method to the customer
         request.put({
@@ -156,7 +137,23 @@ app.post('/quote-approval', (req, res) => {
                 customer: { 
                     id: customer_id, 
                     tags, 
-                    note 
+                    note: `
+                    PayPal Email:${pp_email}\n
+                    Customer Name: ${bt_name}\n
+                    Customer Address: ${bt_address}\n
+                    Account Type: ${bt_accounttype}\n
+                    Bank Name: ${bt_bankname}\n
+                    Bank Address: ${bt_bankaddress}\n
+                    Account Number: ${bt_accountnumber}\n
+                    Routing Number: ${bt_routingnumber}\n
+                    Customer Name: ${bi_name}\n
+                    Customer Address: ${bi_address}\n
+                    Account Type: ${bi_accounttype}\n
+                    Bank Name: ${bi_bankname}\n
+                    Bank Address: ${bi_bankaddress}\n
+                    Account Number: ${bi_iban}\n
+                    Routing Number: ${bi_swift}
+                `  
                 } 
             },
             url: `https://${SHOP_URL}/admin/customers/${customer_id}.json` 
