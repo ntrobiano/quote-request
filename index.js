@@ -138,20 +138,20 @@ app.post('/quote-approval', (req, res) => {
                     id: customer_id, 
                     tags, 
                     note: `
-                    PayPal Email:${pp_email}\n
-                    Customer Name: ${bt_name}\n
-                    Customer Address: ${bt_address}\n
-                    Account Type: ${bt_accounttype}\n
-                    Bank Name: ${bt_bankname}\n
-                    Bank Address: ${bt_bankaddress}\n
-                    Account Number: ${bt_accountnumber}\n
-                    Routing Number: ${bt_routingnumber}\n
-                    Customer Name: ${bi_name}\n
-                    Customer Address: ${bi_address}\n
-                    Account Type: ${bi_accounttype}\n
-                    Bank Name: ${bi_bankname}\n
-                    Bank Address: ${bi_bankaddress}\n
-                    Account Number: ${bi_iban}\n
+                    PayPal Email:${pp_email}
+                    Customer Name: ${bt_name}
+                    Customer Address: ${bt_address}
+                    Account Type: ${bt_accounttype}
+                    Bank Name: ${bt_bankname}
+                    Bank Address: ${bt_bankaddress}
+                    Account Number: ${bt_accountnumber}
+                    Routing Number: ${bt_routingnumber}
+                    Customer Name: ${bi_name}
+                    Customer Address: ${bi_address}
+                    Account Type: ${bi_accounttype}
+                    Bank Name: ${bi_bankname}
+                    Bank Address: ${bi_bankaddress}
+                    Account Number: ${bi_iban}
                     Routing Number: ${bi_swift}
                 `  
                 } 
