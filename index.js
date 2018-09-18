@@ -44,7 +44,20 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         `,
         images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
         options: [{ name: "Offer", values: [ "Consignment", "Upfront Purchase", "Store Credit" ] }],
-        variants: [{ option1: "Consignment" }, { option1: "Upfront Purchase" }, { option1: "Store Credit" }],
+        variants: [
+            { option1: "Consignment" 
+            inventory_management: "shopify",
+            inventory_quantity: 0,
+            }, 
+            { option1: "Upfront Purchase" 
+            inventory_management: "shopify",
+            inventory_quantity: 0,        
+            }, 
+            { option1: "Store Credit" 
+            inventory_management: "shopify",
+            inventory_quantity: 0,        
+            }
+        ],
         vendor,
         product_type: "QuoteRequest",
         tags: ("QuoteRequest", "pfs:hidden"),
@@ -139,7 +152,7 @@ app.post('/quote-approval', (req, res) => {
                     tags, 
                     note: `
                     PayPal Email:${pp_email}\n
-                    BANK TRANSFER\n
+                    BANK TRANSFER
                     Customer Name: ${bt_name}
                     Customer Address: ${bt_address}
                     Account Type: ${bt_accounttype}
