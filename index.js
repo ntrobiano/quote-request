@@ -45,13 +45,16 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
         options: [{ name: "Offer", values: [ "Consignment", "Upfront Purchase", "Store Credit" ] }],
         variants: [
-            {   inventory_quantity: 0,
+            {   inventory_management: "shopify",
+                inventory_quantity: 0,
                 option1: "Consignment" }, 
                 
-            {   inventory_quantity: 0,
+            {   inventory_management: "shopify",
+                inventory_quantity: 0,
                 option1: "Upfront Purchase" }, 
                 
-            {   inventory_quantity: 0,
+            {   inventory_management: "shopify",
+                inventory_quantity: 0,
                 option1: "Store Credit" }],
         vendor,
         product_type: "QuoteRequest",
