@@ -127,6 +127,7 @@ app.post('/quote-approval', (req, res) => {
     });
 
     let tagsArray = [];
+    let existingordernumb =[]
 
     // Get the current customers tags
     
@@ -136,9 +137,10 @@ app.post('/quote-approval', (req, res) => {
     }, (error, response, body) => {
         if (body && body.tags) {
             tagsArray = body.tags.split(', ');
+            existingordernumb = ordernumb
         }
         
-        const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
+        const tags = [ ...tagsArray, existingordernumb, payment_method_tag, ordernumb ].join(', ');
         
         // Assign the payment method to the customer
         request.put({
