@@ -68,7 +68,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
         url: `https://${SHOP_URL}/admin/products.json`
     }, (error, response, body) => {
 
-        // DONE: create a draft order with above products
+        // DONE: create a draft order using above products
         if (body) {
             const { product } = body;
             // console.log(product.options, product.variants, product.tags)
@@ -135,7 +135,7 @@ app.post('/quote-approval', (req, res) => {
             tagsArray = body.tags.split(', ');
         }
         
-        const tags = [ ...tagsArray, payment_method_tag, ordernumb ].join(', ');
+        const tags = [ ...tagsArray, payment_method_tag ].join(', ');
         
         // Assign the payment method to the customer
         request.put({
