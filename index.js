@@ -8,7 +8,7 @@ const app = express();
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: maxSize } });
-const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = process.env;
+const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD, UPS_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
 app.use(cors());
@@ -177,5 +177,7 @@ app.post('/quote-approval', (req, res) => {
     });
 
 });
+
+
 
 app.listen(PORT);
