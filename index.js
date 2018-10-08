@@ -92,7 +92,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                 },
                 json: true,
                 url: `https://${SHOP_URL}/admin/draft_orders.json`
-            });
+            }); 
 
             res.send('New Quote Created');
 
