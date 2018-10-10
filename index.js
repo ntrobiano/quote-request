@@ -24,6 +24,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
     const {
         customer_id,
         customer_email,
+        customer_fn,
         vendor,
         body_html,
         type,
@@ -104,16 +105,16 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                 from: 'service@coutureusa.com',
                 subject: 'Your Quote Has Been Submitted',
                 html: `
-                Dear ${customer_email},<br><br>
+                Dear ${customer_fn},<br><br>
                 Thank you for contacting CoutureUSA. We have successfully received your quote request information.<br>
                 You will receive a follow-up email with pricing details following the review by one of our qualified experts.<br>
                 Please note, quotes are completed in the order they are received.<br>
                 Please allow 1-2 business days to receive a response.<br><br>
                 Brand: <strong>${vendor}</strong>,<br>
-                Item Type: <strong>${product_type}</strong>,<br><br>
+                Item Type: <strong>${type}</strong>,<br><br>
                 In the meantime, please contact us if you have any questions or if we can assist you in any other way.<br>
                 Thank you again and enjoy your day!<br><br>
-                QUOTE TEAM<br>
+                <strong>QUOTE TEAM</strong><br>
                 Couture Designer Resale Boutique 
                 `,
             });
