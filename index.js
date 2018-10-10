@@ -3,13 +3,17 @@ const express = require('express');
 const request = require('request');
 const cors = require('cors');
 const multer = require('multer');
+const sgMail = require('@sendgrid/mail');
+
 var maxSize = 5 * 1000 * 1000 * 1000;
 const app = express();
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: maxSize } });
-const { PORT, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD, UPS_PASSWORD } = process.env;
+const { PORT, SENDGRID_API_KEY, SHOP_URL, SHOPIFY_API_KEY, SHOPIFY_PASSWORD, UPS_PASSWORD } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
+
+sgMail.setApiKey(SENDGRID_API_KEY);
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +23,7 @@ app.get('/', (req, res) => res.send('Shopify Quote Request'));
 app.post('/quote', upload.array('photos', 4), (req, res) => {
     const {
         customer_id,
+        customer_email,
         vendor,
         body_html,
         type,
@@ -42,7 +47,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             Year Purchased: ${year_purchased}\n
             Original Price: ${original_price}
         `,
-        images: req.files.map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
+        images: (req.files || []).map(file => file.buffer && ({ attachment: file.buffer.toString("base64") })),
         options: [{ name: "Offer", values: [ "Consignment", "Upfront Purchase", "Store Credit" ] }],
         variants: [
             {   inventory_management: "shopify",
@@ -93,6 +98,25 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                 json: true,
                 url: `https://${SHOP_URL}/admin/draft_orders.json`
             }); 
+
+            sgMail.send({
+                to: customer_email,
+                from: 'service@coutureusa.com',
+                subject: 'Your Quote Has Been Submitted',
+                html: `
+                Dear ${customer_email},<br><br>
+                Thank you for contacting CoutureUSA. We have successfully received your quote request information.<br>
+                You will receive a follow-up email with pricing details following the review by one of our qualified experts.<br>
+                Please note, quotes are completed in the order they are received.<br>
+                Please allow 1-2 business days to receive a response.<br><br>
+                Brand: <strong>${vendor}</strong>,<br>
+                Item Type: <strong>${product_type}</strong>,<br><br>
+                In the meantime, please contact us if you have any questions or if we can assist you in any other way.<br>
+                Thank you again and enjoy your day!<br><br>
+                QUOTE TEAM<br>
+                Couture Designer Resale Boutique 
+                `,
+            });
 
             res.send('New Quote Created');
 
