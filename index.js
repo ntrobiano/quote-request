@@ -5,6 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 const sgMail = require('@sendgrid/mail');
 const Sentry = require('@sentry/node');
+const Shippo = require('shippo');
 
 const GIGABITE = 1000 * 1000 * 1000;
 
@@ -17,7 +18,8 @@ const {
     SHOP_URL,
     SHOPIFY_API_KEY,
     SHOPIFY_PASSWORD,
-    UPS_PASSWORD
+    UPS_PASSWORD,
+    SHIPPO_API_KEY
 } = process.env;
 const auth = { user: SHOPIFY_API_KEY, password: SHOPIFY_PASSWORD };
 
@@ -29,6 +31,7 @@ app.use(cors());
 app.use(express.json());
 
 sgMail.setApiKey(SENDGRID_API_KEY);
+const shippo = Shippo(SHIPPO_API_KEY);
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 5 * GIGABITE }
@@ -51,9 +54,9 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
-    Sentry.configureScope(scope => {
-        scope.setTag(req.body);
-    });
+    // Sentry.configureScope(scope => {
+    //     scope.setTag(req.body);
+    // });
 
     // DONE: create combined body with html + condition, year_purchased, original_price, dimensions
 
@@ -165,9 +168,9 @@ app.post('/quote-approval', (req, res) => {
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
-    Sentry.configureScope(scope => {
-        scope.setTag(req.body);
-    });
+    //Sentry.configureScope(scope => {
+    //    scope.setTag(req.body);
+    //});
 
     // Delete the vartiants we don't want
     unwanted_variant_ids.forEach(variant_id => {
@@ -229,6 +232,96 @@ app.post('/quote-approval', (req, res) => {
 
 });
 
+
+app.post('/shipping-label', (req, res) => {
+    const {
+        customer_name,
+        customer_company,
+        customer_street1,
+        customer_street2,
+        customer_city,
+        customer_state,
+        customer_zip,
+        customer_country,
+        customer_phone,
+        customer_email,
+    } = req.body;
+
+    // Extra info for sentry.io in the event that an error is thrown later
+    //Sentry.configureScope(scope => {
+    //    scope.setTag(req.body);
+    //});
+
+    var addressFrom  = {
+        name: "Merchandise Review Department",
+        company: "Couture USA",
+        street1: "10117 Montague St.",
+        city: "Tampa",
+        state: "FL",
+        zip: "33626",
+        country: "USA", //iso2 country code
+        phone: "1-888-969-7455",
+        email: "service@coutureusa.com",
+    }
+    
+    // example address_to object dict
+    var addressTo = {
+        name: customer_name,
+        company: customer_company,
+        street1: customer_street1,
+        street2: customer_street2,
+        city: customer_city,
+        state: customer_state,
+        zip: customer_zip,
+        country: customer_country, //iso2 country code
+        phone: customer_phone,
+        email: customer_email,
+        // metadata:  customer_metadata
+    }
+    
+    // parcel object dict
+    var parcel = {
+        length: "18",
+        width: "12",
+        height: "8",
+        distance_unit: "in",
+        weight: "3",
+        mass_unit: "lb"
+    }
+    
+
+    shippo.shipment.create({
+                "address_from": addressFrom,
+                "address_to": addressTo,
+                "parcels": [parcel],
+                "async": false
+    })
+    .then(shipment => {
+        console.log("shipment : %s", JSON.stringify(shipment, null, 4));
+        return shippo.shipment.rates(shipment.object_id)
+    })
+    .then(rates => {
+        // get the first rate ( NOT SURE IF THIS IS WHAT WE WANT )
+        rate = rates.results[0];
+        // Purchase the desired rate
+        return shippo.transaction.create({ "rate": rate.object_id, "async": false})
+    })
+    .then(transaction => {
+        console.log("transaction : %s", JSON.stringify(transaction, null, 4));
+        // print label_url and tracking_number
+        if (transaction.status == "SUCCESS") {
+            console.log("Label URL: %s", transaction.label_url);
+            console.log("Tracking Number: %s", transaction.tracking_number);
+        } else {
+            //Deal with an error with the transaction
+            console.log("Message: %s", JSON.stringify(transaction.messages, null, 2));
+        }
+
+    })
+    .then(() => res.sendStatus(200))
+    .catch(error => res.send(error));
+
+});
 
 
 app.listen(PORT);
