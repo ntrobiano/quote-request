@@ -142,7 +142,11 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                     In the mean time, please contact us if you have any questions or if we can assist you in any other way.<br>
                     Thank you again and enjoy your day!<br><br>
                     <strong>QUOTE TEAM</strong><br>
-                    Couture Designer Resale Boutique 
+                    Couture Designer Resale Boutique<br>
+                    888.969.7455 - Toll Free<br>
+                    813.926.9889 - Local<br>
+                    888.969.7455 - Fax<br>
+                    <a href="https://coutureusa.com"><strong>http://www.coutureusa.com</strong></a>
                 `,
             });
 
@@ -200,8 +204,8 @@ app.post('/quote-approval', (req, res) => {
             auth,
             json: true,
             body: { 
-                cusomer: { 
-                    id: cusomer_id, 
+                customer: { 
+                    id: customer_id, 
                     tags, 
                     note:`
                     PayPal Email:${pp_email}\n
