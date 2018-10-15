@@ -92,7 +92,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             }],
         vendor,
         product_type: "QuoteRequest",
-        tags: ("QuoteRequest", "pfs:hidden"),
+        tags: `QuoteRequest, pfs:hidden`,
         published: true
     };
 
@@ -146,7 +146,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
                     888.969.7455 - Toll Free<br>
                     813.926.9889 - Local<br>
                     888.969.7455 - Fax<br>
-                    <a href="https://coutureusa.com"><strong>http://www.coutureusa.com</strong></a>
+                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
                 `,
             });
 
@@ -164,6 +164,7 @@ app.post('/quote-approval', (req, res) => {
         customer_id,
         product_id,
         ordernumb,
+        markdown,
         unwanted_variant_ids, // consignment, up_front, store_credit
         payment_method_tag, // check, paypal, transfer, international
         pp_email,
@@ -182,6 +183,13 @@ app.post('/quote-approval', (req, res) => {
             auth,
             url: `https://${SHOP_URL}/admin/products/${product_id}/variants/${variant_id}.json` 
         });
+    });
+
+    // Assign product markdown tag to product 
+    request.put({
+        auth,
+        tags: `${markdown}, pfs:hidden`,
+        url: `https://${SHOP_URL}/admin/products/${product_id}.json`
     });
 
     let tagsArray = [];
