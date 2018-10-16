@@ -187,11 +187,15 @@ app.post('/quote-approval', (req, res) => {
 
     // Assign product markdown tag to product 
 
-    
-    request.post({
+    request.put({
         auth,
-        body: { tags: `${markdown}, QuoteRequest, pfs:hidden`},
         json: true,
+        body: { 
+            product: {
+                id: product_id,
+                tags: `${markdown}, QuoteRequest, pfs:hidden`
+            }
+        },
         url: `https://${SHOP_URL}/admin/products/${product_id}.json`
     });
 
