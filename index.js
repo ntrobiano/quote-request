@@ -76,7 +76,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             {
                 inventory_management: "shopify",
                 inventory_quantity: 0,
-                option1: "Consignment"
+                option1: "Consignment" 
             },
 
             {
