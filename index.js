@@ -280,7 +280,7 @@ app.post('/shipping-label', (req, res) => {
         zip: "33626",
         country: "USA", //iso2 country code
         phone: "1-888-969-7455",
-        email: "service@coutureusa.com",
+        email: "service@coutureusa.com"
     }
     
     // example address_to object dict
@@ -294,7 +294,7 @@ app.post('/shipping-label', (req, res) => {
         zip: customer_zip,
         country: customer_country, //iso2 country code
         phone: customer_phone,
-        email: customer_email,
+        email: customer_email
         // metadata:  customer_metadata
     }
     
