@@ -272,19 +272,6 @@ app.post('/shipping-label', (req, res) => {
     //});
 
     var addressFrom  = {
-        name: "Merchandise Review Department",
-        company: "Couture USA",
-        street1: "10117 Montague St.",
-        city: "Tampa",
-        state: "FL",
-        zip: "33626",
-        country: "USA", //iso2 country code
-        phone: "1-888-969-7455",
-        email: "service@coutureusa.com"
-    }
-    
-    // example address_to object dict
-    var addressTo = {
         name: customer_name,
         company: customer_company,
         street1: customer_street1,
@@ -296,6 +283,19 @@ app.post('/shipping-label', (req, res) => {
         phone: customer_phone,
         email: customer_email,
         metadata:  customer_metadata
+    }
+    
+    // example address_to object dict
+    var addressTo = {
+        name: "Merchandise Review Department",
+        company: "Couture USA",
+        street1: "10117 Montague St.",
+        city: "Tampa",
+        state: "FL",
+        zip: "33626",
+        country: "USA", //iso2 country code
+        phone: "1-888-969-7455",
+        email: "service@coutureusa.com"
     }
     
     // parcel object dict
@@ -329,6 +329,14 @@ app.post('/shipping-label', (req, res) => {
         console.log("transaction : %s", JSON.stringify(transaction, null, 4));
         // print label_url and tracking_number
         if (transaction.status == "SUCCESS") {
+            sgMail.send({
+                to: customer_email,
+                from: 'service@coutureusa.com',
+                subject: 'Your Shipping Label is Ready',
+                html: `Dear ${customer_fn},<br><br>
+                Your shipping label is now ready. <a href="${transaction.label_url}">Click here to download it now.</a>
+                `,
+            });
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
         } else {
