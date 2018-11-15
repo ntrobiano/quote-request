@@ -6,7 +6,6 @@ const multer = require('multer');
 const sgMail = require('@sendgrid/mail');
 const Sentry = require('@sentry/node');
 const Shippo = require('shippo');
-const opn = require('opn');
 
 const GIGABITE = 1000 * 1000 * 1000;
 
@@ -331,7 +330,7 @@ app.post('/shipping-label', (req, res) => {
         if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
-            opn(transaction.label_url);
+            require('openurl').open(transaction.tracking_number)
             
         } else {
             //Deal with an error with the transaction
