@@ -336,7 +336,7 @@ app.post('/shipping-label', (req, res) => {
                 from: 'service@coutureusa.com',
                 subject: 'Your Shipping Label is Ready',
                 html: `
-                    Your shipping label is ready.
+                    Your shipping label is ready. <a href="${transaction.label_url}">Click here to download it.</a>
                     Thank you again and enjoy your day!<br><br>
                     <strong>QUOTE TEAM</strong><br>
                     Couture Designer Resale Boutique<br>
