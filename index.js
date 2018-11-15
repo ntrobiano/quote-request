@@ -328,15 +328,7 @@ app.post('/shipping-label', (req, res) => {
     .then(transaction => {
         console.log("transaction : %s", JSON.stringify(transaction, null, 4));
         // print label_url and tracking_number
-        if (transaction.status == "SUCCESS") {
-            sgMail.send({
-                to: customer_email,
-                from: 'service@coutureusa.com',
-                subject: 'Your Shipping Label is Ready',
-                html: `Dear ${customer_fn},<br><br>
-                Your shipping label is now ready. <a href="${transaction.label_url}">Click here to download it now.</a>
-                `,
-            });
+        if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
         } else {
