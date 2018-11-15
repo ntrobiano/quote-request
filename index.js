@@ -264,7 +264,6 @@ app.post('/shipping-label', (req, res) => {
         customer_country,
         customer_phone,
         customer_email,
-        customer_metadata,
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
@@ -282,7 +281,7 @@ app.post('/shipping-label', (req, res) => {
         country: "USA", //iso2 country code
         phone: "1-888-969-7455",
         email: "service@coutureusa.com"
-    };
+    }
     
     // example address_to object dict
     var addressTo = {
@@ -295,9 +294,8 @@ app.post('/shipping-label', (req, res) => {
         zip: customer_zip,
         country: customer_country, //iso2 country code
         phone: customer_phone,
-        email: customer_email,
-        metadata: customer_metadata
-    };
+        email: customer_email
+    }
     
     // parcel object dict
     var parcel = {
@@ -307,7 +305,7 @@ app.post('/shipping-label', (req, res) => {
         distance_unit: "in",
         weight: "3",
         mass_unit: "lb"
-    };
+    }
     
 
     shippo.shipment.create({
