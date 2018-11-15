@@ -272,7 +272,6 @@ app.post('/shipping-label', (req, res) => {
     //});
 
     var addressFrom  = {
-       
         name: "Merchandise Review Department",
         company: "Couture USA",
         street1: "10117 Montague St.",
