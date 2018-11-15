@@ -294,7 +294,7 @@ app.post('/shipping-label', (req, res) => {
         zip: customer_zip,
         country: customer_country, //iso2 country code
         phone: customer_phone,
-        email: customer_email
+        email: customer_email 
     }
     
     // parcel object dict
