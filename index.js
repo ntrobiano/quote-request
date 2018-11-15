@@ -330,7 +330,22 @@ app.post('/shipping-label', (req, res) => {
         if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
-            require('openurl').open(transaction.tracking_number)
+
+            sgMail.send({
+                to: customer_email,
+                from: 'service@coutureusa.com',
+                subject: 'Your Shipping Label is Ready',
+                html: `
+                    Your shipping label is ready.
+                    Thank you again and enjoy your day!<br><br>
+                    <strong>QUOTE TEAM</strong><br>
+                    Couture Designer Resale Boutique<br>
+                    888.969.7455 - Toll Free<br>
+                    813.926.9889 - Local<br>
+                    888.969.7455 - Fax<br>
+                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
+                `,
+            });
             
         } else {
             //Deal with an error with the transaction
