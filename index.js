@@ -272,6 +272,20 @@ app.post('/shipping-label', (req, res) => {
     //});
 
     var addressFrom  = {
+       
+        name: "Merchandise Review Department",
+        company: "Couture USA",
+        street1: "10117 Montague St.",
+        city: "Tampa",
+        state: "FL",
+        zip: "33626",
+        country: "USA", //iso2 country code
+        phone: "1-888-969-7455",
+        email: "service@coutureusa.com"
+    }
+    
+    // example address_to object dict
+    var addressTo = {
         name: customer_name,
         company: customer_company,
         street1: customer_street1,
@@ -282,19 +296,6 @@ app.post('/shipping-label', (req, res) => {
         country: customer_country, //iso2 country code
         phone: customer_phone,
         email: customer_email
-    }
-    
-    // example address_to object dict
-    var addressTo = {
-        name: "Merchandise Review Department",
-        company: "Couture USA",
-        street1: "10117 Montague St.",
-        city: "Tampa",
-        state: "FL",
-        zip: "33626",
-        country: "USA", //iso2 country code
-        phone: "1-888-969-7455",
-        email: "service@coutureusa.com"
     }
     
     // parcel object dict
