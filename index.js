@@ -272,19 +272,6 @@ app.post('/shipping-label', (req, res) => {
     //});
 
     var addressFrom  = {
-        name: "Merchandise Review Department",
-        company: "Couture USA",
-        street1: "10117 Montague St.",
-        city: "Tampa",
-        state: "FL",
-        zip: "33626",
-        country: "USA", //iso2 country code
-        phone: "1-888-969-7455",
-        email: "service@coutureusa.com"
-    }
-    
-    // example address_to object dict
-    var addressTo = {
         name: customer_name,
         company: customer_company,
         street1: customer_street1,
@@ -295,6 +282,19 @@ app.post('/shipping-label', (req, res) => {
         country: customer_country, //iso2 country code
         phone: customer_phone,
         email: customer_email
+    }
+    
+    // example address_to object dict
+    var addressTo = {
+        name: "Merchandise Review Department",
+        company: "Couture USA",
+        street1: "10117 Montague St.",
+        city: "Tampa",
+        state: "FL",
+        zip: "33626",
+        country: "USA", //iso2 country code
+        phone: "1-888-969-7455",
+        email: "nicholas@trobianostudios.com"
     }
     
     // parcel object dict
@@ -330,6 +330,21 @@ app.post('/shipping-label', (req, res) => {
         if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
+            sgMail.send({
+                to: customer_email,
+                from: 'service@coutureusa.com',
+                subject: 'Your Shipping Label is Ready',
+                html: `
+                    Dear ${customer_fn},<br><br>
+                    Here is your shipping label: ${transaction.label_url};
+                    <strong>QUOTE TEAM</strong><br>
+                    Couture Designer Resale Boutique<br>
+                    888.969.7455 - Toll Free<br>
+                    813.926.9889 - Local<br>
+                    888.969.7455 - Fax<br>
+                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
+                `,
+            });
         } else {
             //Deal with an error with the transaction
             console.log("Message: %s", JSON.stringify(transaction.messages, null, 2));
