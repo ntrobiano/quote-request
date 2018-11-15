@@ -282,7 +282,7 @@ app.post('/shipping-label', (req, res) => {
         country: "USA", //iso2 country code
         phone: "1-888-969-7455",
         email: "service@coutureusa.com"
-    }
+    };
     
     // example address_to object dict
     var addressTo = {
@@ -297,7 +297,7 @@ app.post('/shipping-label', (req, res) => {
         phone: customer_phone,
         email: customer_email,
         metadata: customer_metadata
-    }
+    };
     
     // parcel object dict
     var parcel = {
@@ -307,7 +307,7 @@ app.post('/shipping-label', (req, res) => {
         distance_unit: "in",
         weight: "3",
         mass_unit: "lb"
-    }
+    };
     
 
     shippo.shipment.create({
