@@ -6,6 +6,7 @@ const multer = require('multer');
 const sgMail = require('@sendgrid/mail');
 const Sentry = require('@sentry/node');
 const Shippo = require('shippo');
+const opn = require('opn');
 
 const GIGABITE = 1000 * 1000 * 1000;
 
@@ -294,7 +295,7 @@ app.post('/shipping-label', (req, res) => {
         zip: "33626",
         country: "USA", //iso2 country code
         phone: "1-888-969-7455",
-        email: "nicholas@trobianostudios.com"
+        email: "service@coutureusa.com"
     }
     
     // parcel object dict
@@ -330,21 +331,8 @@ app.post('/shipping-label', (req, res) => {
         if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
-            sgMail.send({
-                to: customer_email,
-                from: 'service@coutureusa.com',
-                subject: 'Your Shipping Label is Ready',
-                html: `
-                    Dear ${customer_fn},<br><br>
-                    Here is your shipping label: ${transaction.label_url};
-                    <strong>QUOTE TEAM</strong><br>
-                    Couture Designer Resale Boutique<br>
-                    888.969.7455 - Toll Free<br>
-                    813.926.9889 - Local<br>
-                    888.969.7455 - Fax<br>
-                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
-                `,
-            });
+            opn(transaction.label_url);
+            
         } else {
             //Deal with an error with the transaction
             console.log("Message: %s", JSON.stringify(transaction.messages, null, 2));
