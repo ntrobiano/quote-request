@@ -340,6 +340,7 @@ app.post('/shipping-label', (req, res) => {
                     Please click the link below to download it, then print the label and send in your package.<br>
                     Our Buying Team will contact you once your package is received and reviewed.<br>
                     <a href="${transaction.label_url}"><strong>Download Shipping Label</strong></a><br><br>
+                    Thank you,<br>
                     <strong>QUOTE TEAM</strong><br>
                     Couture Designer Resale Boutique<br>
                     888.969.7455 - Toll Free<br>
@@ -352,6 +353,26 @@ app.post('/shipping-label', (req, res) => {
         } else {
             //Deal with an error with the transaction
             console.log("Message: %s", JSON.stringify(transaction.messages, null, 2));
+            
+            sgMail.send({
+                to: customer_email,
+                from: 'service@coutureusa.com',
+                subject: 'Couture USA – We need some more information for your label',
+                html: `
+                    We're sorry, but we need some more information before we create your prepaid shipping label.<br>
+                    Please check your account to ensure your primary address is accurate, or contact our team for assistance.<br>
+                    <a href="https://coutureusa.com/account"><strong>Check my account</strong></a><br><br>                
+                    Thank you,<br>
+                    <strong>QUOTE TEAM</strong><br>
+                    Couture Designer Resale Boutique<br>
+                    888.969.7455 - Toll Free<br>
+                    813.926.9889 - Local<br>
+                    888.969.7455 - Fax<br>
+                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
+                `,
+            });
+
+
         }
 
     })
