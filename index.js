@@ -334,10 +334,12 @@ app.post('/shipping-label', (req, res) => {
             sgMail.send({
                 to: customer_email,
                 from: 'service@coutureusa.com',
-                subject: 'Your Shipping Label is Ready',
+                subject: 'Couture USA – Prepaid Shipping Label',
                 html: `
-                    Your shipping label is ready. <a href="${transaction.label_url}">Click here to download it.</a>
-                    Thank you again and enjoy your day!<br><br>
+                    Your UPS prepaid shipping label is ready for you to download.<br>
+                    Please click the link below to download it, then print the label and send in your package.<br>
+                    Our Buying Team will contact you once your package is received and reviewed.<br>
+                    <a href="${transaction.label_url}"><strong>Download Shipping Label</strong></a><br><br>
                     <strong>QUOTE TEAM</strong><br>
                     Couture Designer Resale Boutique<br>
                     888.969.7455 - Toll Free<br>
