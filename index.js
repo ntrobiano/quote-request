@@ -366,7 +366,7 @@ app.post('/shipping-label', (req, res) => {
                     <strong>QUOTE TEAM</strong><br>
                     Couture Designer Resale Boutique<br>
                     888.969.7455 - Toll Free<br>
-                    813.926.9889 - Local<br>
+                    813.926.9889 - Local<br> 
                     888.969.7455 - Fax<br>
                     <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
                 `,
