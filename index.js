@@ -193,7 +193,7 @@ app.post('/quote-approval', (req, res) => {
         body: { 
             product: {
                 id: product_id,
-                tags: `${markdown}, QuoteRequest, pfs:hidden`
+                tags: `${markdown}, QuoteRequest, pfs:hidden, label-not-requested`
             }
         },
         url: `https://${SHOP_URL}/admin/products/${product_id}.json`
@@ -346,7 +346,7 @@ app.post('/shipping-label', (req, res) => {
                     888.969.7455 - Toll Free<br>
                     813.926.9889 - Local<br>
                     888.969.7455 - Fax<br>
-                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>
+                    <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>    
                 `,
             });
             
