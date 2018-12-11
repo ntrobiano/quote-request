@@ -307,6 +307,18 @@ app.post('/shipping-label', (req, res) => {
         weight: "3",
         mass_unit: "lb"
     }
+    
+    request.put({
+        auth,
+        json: true,
+        body: { 
+            product: {
+                id: product_id_update,
+                tags: `${markdown}, LabelRequested, QuoteRequest, pfs:hidden`
+            }
+        },
+        url: `https://${SHOP_URL}/admin/products/${product_id}.json`
+    });
 
     shippo.shipment.create({
                 "address_from": addressFrom,
@@ -348,18 +360,6 @@ app.post('/shipping-label', (req, res) => {
                     888.969.7455 - Fax<br>
                     <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>    
                 `,
-            });
-
-            request.put({
-                auth,
-                json: true,
-                body: { 
-                    product: {
-                        id: product_id_update,
-                        tags: `${markdown}, LabelRequested, QuoteRequest, pfs:hidden`
-                    }
-                },
-                url: `https://${SHOP_URL}/admin/products/${product_id}.json`
             });
 
         } else {
