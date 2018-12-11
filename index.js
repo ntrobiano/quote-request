@@ -193,7 +193,7 @@ app.post('/quote-approval', (req, res) => {
         body: { 
             product: {
                 id: product_id,
-                tags: `${markdown}, QuoteRequest, pfs:hidden, label-not-requested`
+                tags: `${markdown}, LabelNotRequested, QuoteRequest, pfs:hidden`
             }
         },
         url: `https://${SHOP_URL}/admin/products/${product_id}.json`
