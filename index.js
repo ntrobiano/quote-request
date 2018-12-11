@@ -264,7 +264,7 @@ app.post('/shipping-label', (req, res) => {
         customer_country,
         customer_phone,
         customer_email,
-        product_id,
+        product_id_update,
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
@@ -355,8 +355,8 @@ app.post('/shipping-label', (req, res) => {
                 json: true,
                 body: { 
                     product: {
-                        id: product_id,
-                        tags: `${markdown}, LabelRequested QuoteRequest, pfs:hidden`
+                        id: product_id_update,
+                        tags: `${markdown}, LabelRequested, QuoteRequest, pfs:hidden`
                     }
                 },
                 url: `https://${SHOP_URL}/admin/products/${product_id}.json`
