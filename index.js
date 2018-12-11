@@ -359,7 +359,7 @@ app.post('/shipping-label', (req, res) => {
                         tags: `${markdown}, LabelRequested, QuoteRequest, pfs:hidden`
                     }
                 },
-                url: `https://${SHOP_URL}/admin/products/${product_id}.json`
+                url: `https://${SHOP_URL}/admin/products/${product_id_update}.json`
             });
 
         } else {
