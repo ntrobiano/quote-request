@@ -264,6 +264,7 @@ app.post('/shipping-label', (req, res) => {
         customer_country,
         customer_phone,
         customer_email,
+        product_id,
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
@@ -348,7 +349,19 @@ app.post('/shipping-label', (req, res) => {
                     <a href="https://coutureusa.com"><strong>www.coutureusa.com</strong></a>    
                 `,
             });
-            
+
+            request.put({
+                auth,
+                json: true,
+                body: { 
+                    product: {
+                        id: product_id,
+                        tags: `${markdown}, QuoteRequest, pfs:hidden`
+                    }
+                },
+                url: `https://${SHOP_URL}/admin/products/${product_id}.json`
+            });
+
         } else {
             //Deal with an error with the transaction
             console.log("Message: %s", JSON.stringify(transaction.messages, null, 2));
