@@ -92,7 +92,7 @@ app.post('/quote', upload.array('photos', 4), (req, res) => {
             }],
         vendor,
         product_type: "QuoteRequest",
-        tags: `LabelNotRequested, QuoteRequest, pfs:hidden`,
+        tags: `QuoteRequest, pfs:hidden`,
         published: true
     };
 
@@ -193,7 +193,7 @@ app.post('/quote-approval', (req, res) => {
         body: { 
             product: {
                 id: product_id,
-                tags: `${markdown}, LabelNotRequested, QuoteRequest, pfs:hidden`
+                tags: `${markdown}, QuoteRequest, pfs:hidden`
             }
         },
         url: `https://${SHOP_URL}/admin/products/${product_id}.json`
@@ -356,7 +356,7 @@ app.post('/shipping-label', (req, res) => {
                 body: { 
                     product: {
                         id: product_id,
-                        tags: `${markdown}, QuoteRequest, pfs:hidden`
+                        tags: `${markdown}, LabelRequested QuoteRequest, pfs:hidden`
                     }
                 },
                 url: `https://${SHOP_URL}/admin/products/${product_id}.json`
