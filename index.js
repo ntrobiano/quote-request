@@ -264,7 +264,6 @@ app.post('/shipping-label', (req, res) => {
         customer_country,
         customer_phone,
         customer_email,
-        product_id,
     } = req.body;
 
     // Extra info for sentry.io in the event that an error is thrown later
@@ -330,18 +329,6 @@ app.post('/shipping-label', (req, res) => {
         if (transaction.status == "SUCCESS") {            
             console.log("Label URL: %s", transaction.label_url);
             console.log("Tracking Number: %s", transaction.tracking_number);
-
-            request.put({
-                auth,
-                json: true,
-                body: { 
-                    product: {
-                        id: product_id,
-                        tags: `${markdown}, QuoteRequest, pfs:hidden`
-                    }
-                },
-                url: `https://${SHOP_URL}/admin/products/${product_id}.json`
-            });
 
             sgMail.send({
                 to: customer_email,
