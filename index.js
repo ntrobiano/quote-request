@@ -333,7 +333,7 @@ app.post('/shipping-label', (req, res) => {
 
             sgMail.send({
                 to: customer_email,
-                from: 'service@coutureusa.com',
+                from: 'service@coutureusa.com', 
                 subject: 'Couture USA – Prepaid Shipping Label',
                 html: `
                     Your UPS prepaid shipping label is ready for you to download.<br>
